@@ -1,0 +1,57 @@
+<html>
+  <head>
+    <style>
+body {
+  text-align: center;
+}
+img {
+  display: none;
+}
+canvas {
+  cursor: none;
+}
+    </style>
+  </head>
+  <body>
+    <h1>Hover to discover!</h1>
+    <canvas id="canvas" width="916" height="432"></canvas>
+    <img id="inside" src="family dome - sept 2019 - interior - render 11 - 1000px-u415959.png">
+    <img id="outside" src="family dome - sept 2019 - interior - render 12 - 1000px-u415957.png">
+  </body>
+  <script type="text/javascript">
+window.onload = () => {
+  const radius = 100;
+
+  const inside = document.getElementById("inside");
+  const outside = document.getElementById("outside");
+  const canvas = document.getElementById("canvas");
+
+  let lastUpdate = 0;
+  
+  const ctx = canvas.getContext("2d");
+  ctx.drawImage(outside,0,0);
+
+  canvas.addEventListener("mousemove",(event) => {  
+    const rect = event.target.getBoundingClientRect();
+
+    const x = event.clientX - rect.left;
+    const y = event.clientY - rect.top;
+
+    ctx.drawImage(outside,0,0);
+
+    ctx.save();
+    ctx.beginPath();
+    ctx.arc(x,y,radius,0,360);
+    ctx.stroke();
+    ctx.clip();
+    ctx.drawImage(inside,0,0);
+    ctx.restore();
+  });
+
+  canvas.addEventListener("mouseout",(event) => {
+    ctx.drawImage(outside,0,0);
+  });
+}
+
+  </script>
+</html>
